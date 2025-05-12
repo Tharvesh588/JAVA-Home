@@ -5,11 +5,16 @@ public class Ecommerce {
         Scanner sc = new Scanner(System.in);
 
         ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product("Phone", 5000));
-        products.add(new Product("Laptop", 10000));
-        products.add(new Product("Mouse", 600));
-        products.add(new Product("32GB Master", 700));
-        products.add(new Product("64GB  Master", 1200));
+        products.add(new Product("Smart Watch", 3000));
+        products.add(new Product("Keyboard", 800));
+        products.add(new Product("Monitor", 15000));
+        products.add(new Product("Bluetooth Speaker", 1500));
+        products.add(new Product("External Hard Drive", 2500));
+        products.add(new Product("Wireless Headphones", 3500));
+        products.add(new Product("Webcam", 1000));
+        products.add(new Product("USB-C Cable", 150));
+        products.add(new Product("Charger Adapter", 500));
+        products.add(new Product("Tablet", 7000));
 
         ArrayList<Product> cart = new ArrayList<>();
 
@@ -63,27 +68,29 @@ public class Ecommerce {
                     break;
 
                 case 2:
-                    System.out.print("Enter product number to add to cart: ");
-                    int num = sc.nextInt();
-                    sc.nextLine();
-                    if (num >= 1 && num <= products.size()) {
-                        Product p = products.get(num - 1);
-                        cart.add(p);
-                        System.out.println(p.name + " added to cart.");
-                    } else {
-                        System.out.println("Invalid product number.");
+                    System.out.print("Enter product numbers to add to cart (space-separated): ");
+                    String input = sc.nextLine();
+                    String[] selectedProducts = input.split(" ");
+
+                    for (String productNum : selectedProducts) {
+                        try {
+                            int num = Integer.parseInt(productNum);
+                            if (num >= 1 && num <= products.size()) {
+                                Product p = products.get(num - 1);
+                                cart.add(p);
+                                System.out.println(p.name + " added to cart.");
+                            } else {
+                                System.out.println("Invalid product number: " + num);
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid input. Please enter numbers separated by spaces.");
+                        }
                     }
                     break;
 
                 case 3:
-                    System.out.println("\nYour Cart:");
-                    double total = 0;
-                    for (Product pItem : cart) {
-                        System.out.println("- " + pItem.name + " - Rs. " + pItem.price);
-                        total += pItem.price;
-                    }
-                    System.out.println("Total: Rs. " + total);
-                    break;
+
+                    printBill(cart);
 
                 case 4:
                     if (cart.isEmpty()) {
@@ -91,12 +98,9 @@ public class Ecommerce {
                         break;
                     }
 
-                    double totalAmount = 0;
-                    for (Product pItem : cart) {
-                        totalAmount += pItem.price;
-                    }
+                    double totalAmount = printBill(cart);
 
-                    System.out.print("Total amount: Rs. " + totalAmount + ". Enter payment amount: ");
+                    System.out.print("Enter payment amount: ");
                     double pay = sc.nextDouble();
 
                     if (pay == totalAmount) {
@@ -106,9 +110,10 @@ public class Ecommerce {
                         System.out.println("Invalid amount, please pay Rs. " + totalAmount);
                     }
                     break;
+
                 case 5:
                     System.out.println("Goodbye!");
-                    valid = false; // or use break with a labeled loop if needed
+                    valid = false;
                     break;
 
                 default:
@@ -119,6 +124,23 @@ public class Ecommerce {
 
         sc.close();
 
+    }
+
+    public static double printBill(ArrayList<Product> cart) {
+        double totalAmount = 0;
+
+        System.out.println("----- Bill -----");
+        System.out.printf("%-20s %-10s\n", "Product Name", "Price");
+
+        for (Product pItem : cart) {
+            System.out.printf("%-20s %-10.2f\n", pItem.name, pItem.price);
+            totalAmount += pItem.price;
+        }
+
+        System.out.println("----------------------");
+        System.out.printf("%-20s %-10.2f\n", "Total Amount", totalAmount);
+
+        return totalAmount;
     }
 
 }
