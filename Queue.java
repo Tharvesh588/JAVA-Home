@@ -49,7 +49,7 @@ class List {
             front = newNode;
         } else {
             rear = front;
-            for (; rear.next != null; rear = rear.next)+;
+            for (; rear.next != null; rear = rear.next);
             rear.next = newNode;
         }
     }
