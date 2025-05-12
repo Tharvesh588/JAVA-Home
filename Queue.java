@@ -3,14 +3,18 @@
 public class Queue {
     public static void main(String[] args) {
         List li = new List();
-        li.create_queue_in_size(5);
+        // li.create_queue_in_size(5);
         li.enQueue(10);
         li.enQueue(11);
         li.enQueue(12);
         li.enQueue(13);
         System.out.println("Size: " + li.size());
-        System.out.println("List is Empty: "+li.isEmpty());
-        System.out.println("List is Full: "+li.isFull());
+        System.out.println("List is Empty: " + li.isEmpty());
+        System.out.println("List is Full: " + li.isFull());
+        li.display();
+        System.out.println("Remove the first two node");
+        li.deQueue();
+        li.deQueue();
         li.display();
 
     }
@@ -18,7 +22,7 @@ public class Queue {
 
 class List {
 
-    Node front;
+    Node front, rear;
 
     class Node {
         int data;
@@ -34,24 +38,30 @@ class List {
         front = null;
     }
 
-    int create_queue_in_size(int size){
+    // int create_queue_in_size(int size){
 
-        return size;
-    }
+    // return size;
+    // }
     void enQueue(int val) {
 
         Node newNode = new Node(val);
-        if (isEmpty()){
+        if (isEmpty()) {
             front = newNode;
-        }
-        else{
-            Node temp = front;
-            for( ;temp.next!= null;temp = temp.next);
-            temp.next = newNode;
+        } else {
+            rear = front;
+            for (; rear.next != null; rear = rear.next)+;
+            rear.next = newNode;
         }
     }
 
-    void deQueue(int val) {
+    void deQueue() {
+        if (isEmpty()) {
+            System.out.println("Queue is Empty");
+        } else {
+            Node temp = front;
+            front = front.next;
+            temp.next = null;
+        }
 
     }
 
@@ -67,12 +77,15 @@ class List {
     int size() {
         int size = 0;
         Node rear = front;
-        for (; rear != null; size += 1, rear = rear.next);
+        for (; rear != null; size += 1, rear = rear.next)
+            ;
         return size;
     }
+
     void display() {
-        Node rear = front;
-        for (; rear != null;System.out.println(rear.data), rear = rear.next);
+        rear = front;
+        for (; rear != null; System.out.println(rear.data), rear = rear.next)
+            ;
     }
 
 }
