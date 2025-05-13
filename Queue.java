@@ -3,14 +3,13 @@
 public class Queue {
     public static void main(String[] args) {
         List li = new List();
-        // li.create_queue_in_size(5);
         li.enQueue(10);
         li.enQueue(11);
         li.enQueue(12);
         li.enQueue(13);
         System.out.println("Size: " + li.size());
-        System.out.println("List is Empty: " + li.isEmpty());
-        System.out.println("List is Full: " + li.isFull());
+        System.out.println("Queue is Empty: " + li.isEmpty());
+        System.out.println("Queue is Full: " + li.isFull());
         li.display();
         System.out.println("Remove the first two node");
         li.deQueue();
@@ -38,10 +37,6 @@ class List {
         front = null;
     }
 
-    // int create_queue_in_size(int size){
-
-    // return size;
-    // }
     void enQueue(int val) {
 
         Node newNode = new Node(val);
